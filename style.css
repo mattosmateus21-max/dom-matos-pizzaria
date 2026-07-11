@@ -1,0 +1,490 @@
+/* Reset e base */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    background-color: #f8f8f8;
+    color: #222;
+}
+
+header,
+footer {
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0.75rem;
+}
+
+header {
+    position: relative;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+h1,
+h2 {
+    text-align: center;
+    margin: 0.5rem 0;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0.5rem;
+}
+
+a {
+    color: #c0392b;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Botão de WhatsApp */
+.whatsapp-float {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #25d366;
+    color: white;
+    font-size: 1.5rem;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.whatsapp-float:hover {
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
+/* Layout da página inicial */
+.grid {
+    display: flexbox;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.grid-item {
+    background-color: #fff;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    text-align: center;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.03);
+}
+
+.grid-item h3 {
+    margin: 0.75rem 0 0.5rem;
+}
+
+.price {
+    font-weight: 700;
+    color: #c0392b;
+}
+
+.product-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.75rem;
+}
+
+button.add-to-cart {
+    background-color: transparent;
+    border-color: #c0392b;
+    color: #c0392b;
+}
+
+button.add-to-cart:hover {
+    background-color: #f8d7da;
+}
+
+button.whats {
+    background-color: hsl(135, 89%, 40%);
+    color: #fff;
+}
+
+.contact p {
+    margin: 0.5rem 0;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+footer {
+    font-size: 0.95rem;
+}
+
+/* Responsividade */
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-item {
+        display: flex;
+        align-items: flex-start;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .grid-item img {
+        width: 220px;
+        height: auto;
+        flex: 0 0 220px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+
+    /*Carrinho flutuante*/
+    .cart-banner-inner {
+        flex-wrap: nowrap;
+    }
+}
+
+/* Checkout */
+.checkout-header {
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.checkout-subtitle {
+    margin: 0.5rem auto 0;
+    max-width: 700px;
+    color: #ddd;
+}
+
+.checkout-main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+}
+
+.card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.checkout-summary {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.25rem;
+}
+
+.summary-image img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 1rem;
+    border: 1px solid #ddd;
+}
+
+.cart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.checkout-summary .summary-info button {
+    margin-top: 1rem;
+    border-color: #c0392b;
+    color: #c0392b;
+}
+
+.checkout-summary .summary-info button:hover {
+    background-color: #fce8e6;
+}
+
+.cart-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cart-table th,
+.cart-table td {
+    padding: 0.85rem 0.75rem;
+    border-bottom: 1px solid #e3e3e3;
+    text-align: left;
+}
+
+.cart-table th {
+    color: #333;
+    font-weight: 700;
+}
+
+.cart-total {
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.summary-info h2 {
+    margin-top: 0;
+}
+
+.summary-description {
+    margin: 0.75rem 0 0.5rem;
+    color: #444;
+}
+
+.checkout-form-card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.checkout-form {
+    display: grid;
+    gap: 1rem;
+}
+
+.field-row {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.field-row input {
+    border: 1px solid #ccc;
+    border-radius: 0.75rem;
+    padding: 0.95rem 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field-row input:focus {
+    outline: none;
+    border-color: #c0392b;
+    box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.12);
+}
+
+.payment-card {
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 1rem;
+    background: #fafafa;
+}
+
+.payment-list {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.payment-option {
+    flex: 1 1 150px;
+    border: 1px solid #ddd;
+    border-radius: 0.75rem;
+    background: white;
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.payment-option:hover {
+    transform: translateY(-2px);
+}
+
+.payment-option input {
+    accent-color: #c0392b;
+}
+
+.payment-option.selected {
+    border-color: #c0392b;
+    background: #fff2f0;
+}
+
+.checkout-submit {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: none;
+    border-radius: 0.85rem;
+    background-color: #c0392b;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.checkout-submit:hover {
+    transform: translateY(-2px);
+    background-color: #a83227;
+}
+
+.order-preview {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
+    padding: 1.25rem;
+}
+
+.preview-text {
+    white-space: pre-wrap;
+    margin: 0.75rem 0 0;
+    color: #333;
+    background: #f7f7f7;
+    border-radius: 0.85rem;
+    padding: 1rem;
+}
+
+.checkout-warning {
+    background: #fff5f3;
+    border: 1px solid #f5c6c2;
+    color: #842029;
+    padding: 1rem 1.25rem;
+    border-radius: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.back-link {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.back-link a {
+    color: #c0392b;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}
+
+.toast-notification {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: rgba(17, 17, 17, 0.95);
+    color: #fff;
+    padding: 1rem 1.25rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 9999;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* teste */
+/* Container Principal do Carrinho */
+.menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.menu-header h2 {
+    margin: 0;
+}
+
+.cart-banner.card {
+    position: static;
+    max-width: none;
+    min-width: auto;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    z-index: auto;
+    padding: 0;
+    margin: 0;
+}
+
+/* Alinhamento Interno (Flexbox) */
+.cart-banner-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Ajuste dos Textos */
+
+/* O Botão "Ver carrinho" Modernizado */
+#viewCartButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: transparent;
+    color: #c0392b;
+    border: 1px solid rgba(192, 57, 43, 0.35);
+    padding: 0.45rem 0.7rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    border-radius: 999px;
+    box-shadow: none;
+}
+
+#viewCartButton:hover {
+    background: rgba(192, 57, 43, 0.08);
+    transform: translateY(-1px);
+}
+
+#viewCartButton:active {
+    transform: translateY(0);
+}
+
+.cart-button-icon {
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+.cart-button-text {
+    font-weight: 700;
+    white-space: nowrap;
+}
+/*teste*/
