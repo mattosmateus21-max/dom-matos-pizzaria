@@ -1,22 +1,6 @@
 // Importações e Inicialização do Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-analytics.js";
-import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-database.js";
-
-const firebaseConfig = {
-    apiKey: "AIzaSyAtHbmErdMx_k2lNU7G-uos_VeiV8_fXTQ",
-    authDomain: "dom-matos-pizzaria.firebaseapp.com",
-    databaseURL: "https://dom-matos-pizzaria-default-rtdb.firebaseio.com",
-    projectId: "dom-matos-pizzaria",
-    storageBucket: "dom-matos-pizzaria.firebasestorage.app",
-    messagingSenderId: "968794744057",
-    appId: "1:968794744057:web:51f6dbe8f7f58e6b3d2e28",
-    measurementId: "G-X4XQ9XNQ2E"
-};
-
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getDatabase(app); // <--- ESTE ERA O GRANDE DETALHE QUE FALTAVA!
+import { db } from './firebase.js';
+import { ref, onValue } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-database.js";
 
 // Pega o ID passado na URL (ex: rastreio.html?id=4829)
 const urlParams = new URLSearchParams(window.location.search);
