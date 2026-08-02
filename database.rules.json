@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "pedidos": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}

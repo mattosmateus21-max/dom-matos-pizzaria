@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel da Cozinha - Dom Matos Pizzaria</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="cozinha.css">
+</head>
+<body>
+
+    <!-- Barra Superior -->
+    <nav class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">🍕 Dom Matos Pizzaria — Painel da Cozinha / Gestão</span>
+        </div>
+    </nav>
+    <div class="kitchen-nav-tabs">
+    <button id="btnAtivos" class="tab-btn active" onclick="mudarFiltro('ativos')">Pedidos Ativos</button>
+    <button id="btnHistorico" class="tab-btn" onclick="mudarFiltro('historico')">Histórico do Dia (Concluídos)</button>
+</div>
+
+    <!-- Conteúdo Principal -->
+    <div class="container my-4">
+        <h3 class="mb-4 text-secondary">Pedidos Recebidos</h3>
+        
+        <!-- Onde os cards dos pedidos serão injetados dinamicamente -->
+        <div id="lista-pedidos" class="row">
+            <div class="col-12 text-center text-muted py-5">
+                <div class="spinner-border text-danger" role="status">
+                    <span class="visually-hidden">Carregando...</span>
+                </div>
+                <p class="mt-2">Conectando ao banco de dados de pedidos...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chamando o script separado -->
+    <script type="module" src="cozinha.js"></script>
+</body>
+</html>

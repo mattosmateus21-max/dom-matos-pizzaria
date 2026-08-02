@@ -1,3 +1,23 @@
+// Importações e Inicialização do Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-analytics.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAtHbmErdMx_k2lNU7G-uos_VeiV8_fXTQ",
+    authDomain: "dom-matos-pizzaria.firebaseapp.com",
+    databaseURL: "https://dom-matos-pizzaria-default-rtdb.firebaseio.com",
+    projectId: "dom-matos-pizzaria",
+    storageBucket: "dom-matos-pizzaria.firebasestorage.app",
+    messagingSenderId: "968794744057",
+    appId: "1:968794744057:web:51f6dbe8f7f58e6b3d2e28",
+    measurementId: "G-X4XQ9XNQ2E"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getDatabase(app); // <--- ESTE ERA O GRANDE DETALHE QUE FALTAVA!
+
 // Registra o Service Worker para permitir que a aplicação funcione com cache e offline.
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').then(function(registration) {
@@ -68,7 +88,9 @@ function renderCartTable(tableBodyId, totalId) {
     tbody.innerHTML = '';
     cart.forEach(item => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${item.nome}</td><td>${item.quantidade}</td><td>R$ ${formatPrice(item.preco)}</td><td>R$ ${formatPrice(item.preco * item.quantidade)}</td>`;
+        const description = item.size || item.crust || item.note ?
+            `<small>${item.size ? item.size + ' • ' : ''}${item.crust ? 'Borda ' + item.crust + ' • ' : ''}${item.note ? item.note : ''}</small>` : '';
+        tr.innerHTML = `<td>${item.nome}${description ? `<br>${description}` : ''}</td><td>${item.quantidade}</td><td>R$ ${formatPrice(item.preco)}</td><td>R$ ${formatPrice(item.preco * item.quantidade)}</td>`;
         tbody.appendChild(tr);
     });
     if (totalEl) totalEl.textContent = `R$ ${formatPrice(getCartTotal(cart))}`;
@@ -98,11 +120,16 @@ function getPaymentInfo() {
 }
 
 // Salva o produto selecionado para exibição na página de checkout.
-function saveSelectedProduct(product, price, image) {
+function saveSelectedProduct(product, price, image, size, crust, note) {
+    const description = `${size || 'Tamanho não selecionado'} • ${crust ? 'Borda ' + crust : 'Sem borda'}${note ? ' • ' + note : ''}`;
     localStorage.setItem('selectedProduct', JSON.stringify({
         product: product || 'Pizza',
         price: price || '',
-        image: image || ''
+        image: image || '',
+        size: size || '',
+        crust: crust || '',
+        note: note || '',
+        description
     }));
 }
 
@@ -145,11 +172,26 @@ function getProductImageFallback(productName) {
 // Resolve os dados de um produto a partir de um elemento da interface.
 function resolveProductInfo(element, fallbackProduct) {
     const product = element.getAttribute('data-product') || fallbackProduct || 'Produto';
-    const price = element.getAttribute('data-price') || '';
+    const basePrice = element.getAttribute('data-price') || '';
     let image = (element.getAttribute('data-image') || '').trim();
+    const itemContainer = element.closest('.carousel-item');
+    const sizeSelect = itemContainer?.querySelector('.pizza-size');
+    const crustSelect = itemContainer?.querySelector('.pizza-crust');
+    const noteInput = itemContainer?.querySelector('.pizza-note');
+
+    const size = sizeSelect?.value || 'Pequena';
+    const sizePrice = sizeSelect?.selectedOptions[0]?.getAttribute('data-price') || basePrice;
+    const crust = crustSelect?.value || '';
+    const crustExtra = parseFloat(crustSelect?.selectedOptions[0]?.getAttribute('data-extra') || '0');
+    const note = noteInput?.value.trim() || '';
+
+    let numericPrice = parseFloat(sizePrice || '0');
+    if (!isNaN(crustExtra)) {
+        numericPrice += crustExtra;
+    }
 
     if (!image) {
-        const imgEl = element.closest('.carousel-item')?.querySelector('img');
+        const imgEl = itemContainer?.querySelector('img');
         image = imgEl ? (imgEl.getAttribute('src') || '') : '';
     }
 
@@ -157,7 +199,16 @@ function resolveProductInfo(element, fallbackProduct) {
         image = getProductImageFallback(product);
     }
 
-    return { product, price, image };
+    const displayName = `${product} (${size}${crust ? `, borda ${crust}` : ''}${note ? `, ${note}` : ''})`;
+
+    return {
+        product: displayName,
+        price: numericPrice.toFixed(2),
+        image,
+        size,
+        crust,
+        note
+    };
 }
 
 // Adiciona o bloco de endereço à mensagem do WhatsApp.
@@ -233,13 +284,54 @@ function clearSelectedProduct() {
     localStorage.removeItem('selectedProduct');
 }
 
+function showProductOptions(itemContainer) {
+    if (!itemContainer) return;
+    hideAllProductOptions();
+    const options = itemContainer.querySelector('.product-options');
+    if (options) {
+        options.classList.remove('hidden');
+    }
+}
+
+function hideAllProductOptions() {
+    document.querySelectorAll('.product-options').forEach(function(options) {
+        options.classList.add('hidden');
+    });
+}
+
+function isInsideProductCard(target) {
+    return Boolean(target.closest('.carousel-item'));
+}
+
+function validateProductOptions(itemContainer) {
+    if (!itemContainer) return false;
+    const sizeValue = itemContainer.querySelector('.pizza-size')?.value || '';
+    const crustValue = itemContainer.querySelector('.pizza-crust')?.value || '';
+    return Boolean(sizeValue && crustValue);
+}
+
 // Inicializa os links de seleção de produto para salvar o pedido na página de checkout.
 function initProductSelection() {
     document.querySelectorAll('.select-order').forEach(function(link) {
         link.addEventListener('click', function(event) {
+            const itemContainer = link.closest('.carousel-item');
+            const options = itemContainer?.querySelector('.product-options');
+            if (options && options.classList.contains('hidden')) {
+                event.preventDefault();
+                showProductOptions(itemContainer);
+                return;
+            }
+
+            if (options && !validateProductOptions(itemContainer)) {
+                event.preventDefault();
+                showProductOptions(itemContainer);
+                showToast('Selecione o tamanho e a borda antes de continuar.');
+                return;
+            }
+
             event.preventDefault();
-            const { product, price, image } = resolveProductInfo(link, 'Pizza');
-            saveSelectedProduct(product, price, image);
+            const { product, price, image, size, crust, note } = resolveProductInfo(link, 'Pizza');
+            saveSelectedProduct(product, price, image, size, crust, note);
             window.location.href = 'endepagam.html';
         });
     });
@@ -248,15 +340,37 @@ function initProductSelection() {
 // Inicializa os botões de adicionar ao carrinho na interface principal.
 function initAddToCartButtons() {
     document.querySelectorAll('.add-to-cart').forEach(function(button) {
-        button.addEventListener('click', function() {
-            const { product, price, image } = resolveProductInfo(button, 'Produto');
+        button.addEventListener('click', function(event) {
+            const itemContainer = button.closest('.carousel-item');
+            const options = itemContainer?.querySelector('.product-options');
+            if (options && options.classList.contains('hidden')) {
+                event.preventDefault();
+                showProductOptions(itemContainer);
+                return;
+            }
+
+            if (options && !validateProductOptions(itemContainer)) {
+                event.preventDefault();
+                showProductOptions(itemContainer);
+                showToast('Selecione o tamanho e a borda antes de adicionar ao carrinho.');
+                return;
+            }
+
+            const { product, price, image, size, crust, note } = resolveProductInfo(button, 'Produto');
             const numericPrice = parseFloat(price || '0');
-            addToCart({ nome: product, preco: numericPrice, quantidade: 1, image });
+            addToCart({ nome: product, preco: numericPrice, quantidade: 1, image, size, crust, note });
             updateCartSummary();
             showToast(`${product} adicionado ao carrinho.`);
         });
     });
 }
+
+// Esconde as opções de pizza caso o clique aconteça fora de qualquer card.
+document.addEventListener('click', function(event) {
+    if (!isInsideProductCard(event.target)) {
+        hideAllProductOptions();
+    }
+});
 
 // Atualiza o resumo do carrinho exibido na interface.
 function updateCartSummary() {
@@ -432,7 +546,7 @@ function initCheckoutPage() {
             updateOrderPreview(previewText);
         });
 
-        form.addEventListener('submit', function(event) {
+        form.addEventListener('submit', async function(event) {
             event.preventDefault();
 
             const nome = document.getElementById('nome').value.trim();
@@ -449,20 +563,72 @@ function initCheckoutPage() {
 
             const cart = getCart();
             const customerName = [nome, sobrenome].filter(Boolean).join(' ');
-            let message;
+            
+            // Gera um número de ID único para o pedido (ex: #4829)
+            const numeroPedido = Math.floor(1000 + Math.random() * 9000);
+            const pedidoId = `#${numeroPedido}`;
+
+            // Prepara os dados do pedido para salvar no banco
+            let itensPedido = [];
+            let valorTotal = 0;
 
             if (cart.length > 0) {
-                message = buildWhatsAppMessageFromCart(cart, { rua, numero, bairro }, pagamento, customerName);
+                itensPedido = cart;
+                valorTotal = getCartTotal(cart);
             } else {
                 const product = getSelectedProduct();
                 const productName = product?.product || 'Pizza';
-                const price = product?.price || '';
-                const image = product?.image || '';
-                message = buildWhatsAppMessage(productName, price, { rua, numero, bairro }, pagamento, image, customerName);
+                const priceNum = parseFloat(product?.price || '0');
+                itensPedido = [{ nome: productName, preco: priceNum, quantidade: 1 }];
+                valorTotal = priceNum;
             }
 
-            const url = `https://wa.me/5587991683831?text=${encodeWhatsappText(message)}`;
-            window.open(url, '_blank', 'noopener,noreferrer');
+            const dadosNovoPedido = {
+                id: pedidoId,
+                cliente: customerName,
+                endereco: `Rua: ${rua}, Nº ${numero}, Bairro: ${bairro}`,
+                pagamento: pagamento,
+                itens: itensPedido,
+                total: valorTotal,
+                status: "Recebido", // Status inicial para a cozinha
+                timestamp: Date.now()
+            };
+
+            try {
+                // 1. Salva no Firebase Realtime Database
+                await set(ref(db, 'pedidos/' + numeroPedido), dadosNovoPedido);
+
+                // 2. Monta a mensagem para o WhatsApp incluindo o ID do pedido e o link de rastreio
+                let message;
+                if (cart.length > 0) {
+                    message = buildWhatsAppMessageFromCart(cart, { rua, numero, bairro }, pagamento, customerName);
+                } else {
+                    const product = getSelectedProduct();
+                    const productName = product?.product || 'Pizza';
+                    const price = product?.price || '';
+                    const image = product?.image || '';
+                    message = buildWhatsAppMessage(productName, price, { rua, numero, bairro }, pagamento, image, customerName);
+                }
+
+                // Adiciona o aviso do ID e do rastreio no texto do WhatsApp
+                message += `\n\n📌 *Número do Pedido:* ${pedidoId}`;
+                message += `\n🔍 *Acompanhe seu pedido em tempo real:*`;
+                message += `\nhttps://dom-matos-pizzaria.web.app/rastreio.html?id=${numeroPedido}`;
+
+                // 3. Limpa os dados salvos localmente
+                clearCart();
+                clearSelectedProduct();
+
+                // 4. Abre o WhatsApp e redireciona o cliente para a página de rastreio
+                const url = `https://wa.me/5587991683831?text=${encodeWhatsappText(message)}`;
+                window.open(url, '_blank', 'noopener,noreferrer');
+                
+                window.location.href = `rastreio.html?id=${numeroPedido}`;
+
+            } catch (error) {
+                console.error("Erro ao salvar pedido no Firebase: ", error);
+                showToast("Erro ao processar o pedido. Tente novamente.");
+            }
         });
     }
 
