@@ -51,52 +51,81 @@
         <section id="noProductMessage" class="checkout-warning hidden">
             <p>Nenhum produto selecionado. <a href="index.html">Voltar ao cardápio</a></p>
         </section>
+        <div id="list-delivery" class="delivery-card">
+            <h2>Escolha a forma de entrega</h2>
+            <p>Selecione uma das opções abaixo:</p>
 
-        <section class="checkout-form-card">
-            <h2>Endereço</h2>
-            <form id="checkoutForm" class="checkout-form">
-                <div class="field-row">
-                    <label for="nome">Nome</label>
-                    <input type="text" id="nome" name="nome" placeholder="Nome" required>
-                </div>
-                <div class="field-row">
-                    <label for="sobrenome">Sobrenome</label>
-                    <input type="text" id="sobrenome" name="sobrenome" placeholder="Sobrenome" required>
-                </div>
-                <div class="field-row">
-                    <label for="rua">Rua</label>
-                    <input type="text" id="rua" name="rua" placeholder="Rua" required>
-                </div>
-                <div class="field-row">
-                    <label for="numero">Número</label>
-                    <input type="text" id="numero" name="numero" placeholder="Número" required>
-                </div>
-                <div class="field-row">
-                    <label for="bairro">Bairro</label>
-                    <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
-                </div>
+            <div class="delivery-options">
+                <label class="delivery-option">
+                    <input type="radio" id="deliveryOptionDelivery" name="deliveryOption" value="delivery" checked>
+                    <span>Delivery</span>
+                </label>
+                <label class="delivery-option">
+                    <input type="radio" id="deliveryOptionRetirada" name="deliveryOption" value="retirada">
+                    <span>Retirada</span>
+                </label>
+                <label class="delivery-option">
+                    <input type="radio" id="deliveryOptionConsumir" name="deliveryOption" value="consumir">
+                    <span>Consumir no local</span>
+                </label>
+            </div>
 
-                <div class="payment-card">
-                    <h2>Formas de Pagamento</h2>
-                    <div class="payment-list">
-                        <label class="payment-option">
-                            <input type="radio" id="dinheiro" name="pagamentos" value="À vista" checked>
-                            <span>À Vista</span>
-                        </label>
-                        <label class="payment-option">
-                            <input type="radio" id="cartao" name="pagamentos" value="Cartão">
-                            <span>Cartão</span>
-                        </label>
-                        <label class="payment-option">
-                            <input type="radio" id="pix" name="pagamentos" value="Pix">
-                            <span>Pix</span>
-                        </label>
+            <section id="checkoutFormCard" class="checkout-form-card hidden">
+                <h2 id="formTitle">Dados para Delivery</h2>
+                <form id="checkoutForm" class="checkout-form">
+                    <div class="field-row">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" name="nome" placeholder="Nome" required>
                     </div>
-                </div>
+                    <div class="field-row">
+                        <label for="sobrenome">Sobrenome</label>
+                        <input type="text" id="sobrenome" name="sobrenome" placeholder="Sobrenome" required>
+                    </div>
+                    <div id="addressFields">
+                        <div class="field-row">
+                            <label for="rua">Rua</label>
+                            <input type="text" id="rua" name="rua" placeholder="Rua">
+                        </div>
+                        <div class="field-row">
+                            <label for="numero">Número</label>
+                            <input type="text" id="numero" name="numero" placeholder="Número">
+                        </div>
+                        <div class="field-row">
+                            <label for="bairro">Bairro</label>
+                            <input type="text" id="bairro" name="bairro" placeholder="Bairro">
+                        </div>
+                    </div>
+                    <div id="tableNumberField" class="field-row hidden">
+                        <label for="mesa">Número da mesa</label>
+                        <input type="text" id="mesa" name="mesa" placeholder="Número da mesa">
+                    </div>
+                    <div class="field-row">
+                        <label for="contato">Contato</label>
+                        <input type="text" id="contato" name="contato" placeholder="Contato" required>
+                    </div>
 
-                <button type="submit" class="btn btn-primary checkout-submit">Enviar pedido para o WhatsApp</button>
-            </form>
-        </section>
+                    <div class="payment-card">
+                        <h2>Formas de Pagamento</h2>
+                        <div class="payment-list">
+                            <label class="payment-option">
+                                <input type="radio" id="dinheiro" name="pagamentos" value="À vista" checked>
+                                <span>À Vista</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" id="cartao" name="pagamentos" value="Cartão">
+                                <span>Cartão</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" id="pix" name="pagamentos" value="Pix">
+                                <span>Pix</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary checkout-submit">Enviar pedido para o WhatsApp</button>
+                </form>
+            </section>
+        </div>
 
         <section id="orderPreview" class="order-preview hidden">
             <h3>Resumo do Pedido</h3>

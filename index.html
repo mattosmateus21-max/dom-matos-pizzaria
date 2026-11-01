@@ -8,10 +8,14 @@
     <title>Dom Matos Pizzaria | Pizzas artesanais em Jupi/PE</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="shortcut icon" href="imagens/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <header>
-        <h1>Pizzaria Dom Matos</h1>
+    <header class="header-pizzaria">
+        <div class="header-container">
+            <h1 class="header-title"><span class="highlight"></span></h1>
+        <img src="imagens/logopizzaria.png" fetchpriority="high" alt="LogoPizzaria" class="header-logo">
+        </div>
     </header>
     <main>
         <section class="menu">
@@ -28,20 +32,20 @@
             </div>
             <div class="grid">
                 <article class="grid-carousel">
-                    <div class="carousel slide" id="pizzaCarousel" data-bs-wrap="true">
+                    <div class="carousel slide" id="pizzaTradicionalCarousel" data-bs-ride="carousel" data-bs-wrap="true">
                         <div class="carousel-inner">
-                            <h3>Pizzas</h3>
+                            <h3>Pizzas Tradicionais</h3>
                             <div class="carousel-item active">
-                                <img src="imagens/pizzacala.webp" class="d-block w-100" alt="Pizza moda da casa" loading="lazy">
+                                <img src="imagens/calabresa.webp" class="d-block w-100" alt="Pizza moda da casa" loading="lazy">
                                 <h3>Calabresa</h3>
-                                <p>Molho especial, calabresa fatiada e cebola.</p>
+                                <p>Molho especial, mussarela, calabresa fatiada, cebola e orégano.</p>
                                 <div class="product-options mb-3 hidden">
                                     <div class="mb-2">
                                         <label class="form-label">Tamanho:</label>
                                         <select class="form-select pizza-size" aria-label="Tamanho da pizza">
                                             <option value="" selected disabled>Selecione o tamanho</option>
-                                            <option value="Pequena" data-price="29.99">Pequena - R$ 29,99</option>
-                                            <option value="Grande" data-price="39.99">Grande - R$ 39,99</option>
+                                            <option value="Pequena" data-price="23.99">Pequena - R$ 23,99</option>
+                                            <option value="Grande" data-price="35.99">Grande - R$ 35,99</option>
                                         </select>
                                     </div>
                                     <div class="mb-2">
@@ -49,8 +53,8 @@
                                         <select class="form-select pizza-crust" aria-label="Borda recheada">
                                             <option value="" selected disabled>Selecione a borda</option>
                                             <option value="Sem borda" data-extra="0">Sem borda</option>
-                                            <option value="Catupiry" data-extra="4.00">Catupiry + R$ 4,00</option>
-                                            <option value="Cheddar" data-extra="4.00">Cheddar + R$ 4,00</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
                                         </select>
                                     </div>
                                     <div>
@@ -59,12 +63,332 @@
                                     </div>
                                 </div>
                                 <div class="product-actions">
-                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Calabresa" data-price="29,99" data-image="pizzacala.webp">Comprar agora</a>
-                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Calabresa" data-price="29,99" data-image="pizzacala.webp">Adicionar ao carrinho</button>
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Calabresa" data-image="imagens/calabresa.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Calabresa" data-image="imagens/calabresa.webp">Adicionar ao carrinho</button>
                                 </div>
                             </div>
                             <div class="carousel-item">
-                                <img src="imagens/pizzaportuguesa.webp" class="d-block w-100" alt="Pizza portuguesa" loading="lazy">
+                                <img src="imagens/margarita.webp" class="d-block w-100" alt="Pizza margarita" loading="lazy">
+                                <h3>Margarita</h3>
+                                <p>Molho especial, mussarela, tomate e oregano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="23.99">Pequena - R$ 23,99</option>
+                                            <option value="Grande" data-price="35.99">Grande - R$ 35,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Margarita" data-image="imagens/margarita.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Margarita" data-image="imagens/margarita.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/presunto.webp" class="d-block w-100" alt="Pizza presunto" loading="lazy">
+                                <h3>Presunto</h3>
+                                <p>Molho especial, mussarela, presunto e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="23.99">Pequena - R$ 23,99</option>
+                                            <option value="Grande" data-price="35.99">Grande - R$ 35,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Presunto" data-image="presunto.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Presunto" data-image="presunto.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/milho.webp" class="d-block w-100" alt="Pizza de milho" loading="lazy">
+                                <h3>Milho</h3>
+                                <p>Molho especial, mussarela, Milho e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="23.99">Pequena - R$ 23,99</option>
+                                            <option value="Grande" data-price="35.99">Grande - R$ 35,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Milho" data-image="imagens/milho.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Milho" data-image="imagens/milho.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/mussarela.webp" class="d-block w-100" alt="Pizza de mussarela" loading="lazy">
+                                <h3>Mussarela</h3>
+                                <p>Molho especial, mussarela e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="23.99">Pequena - R$ 23,99</option>
+                                            <option value="Grande" data-price="35.99">Grande - R$ 35,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Mussarela" data-image="imagens/mussarela.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Mussarela" data-image="imagens/mussarela.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/galinhacaipira.webp" class="d-block w-100" alt="Pizza de galinha caipira" loading="lazy">
+                                <h3>Galinha Caipira</h3>
+                                <p>Molho especial, mussarela, frango, milho e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="23.99">Pequena - R$ 23,99</option>
+                                            <option value="Grande" data-price="35.99">Grande - R$ 35,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Galinha Caipira" data-image="imagens/galinhacaipira.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Galinha Caipira" data-image="imagens/galinhacaipira.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/frangocatupiry.webp" class="d-block w-100" alt="Pizza de frango com catupiry" loading="lazy">
+                                <h3>Frango com catupiry</h3>
+                                <p>Molho especial, mussarela, frango desfiado, catupiry e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="23.99">Pequena - R$ 23,99</option>
+                                            <option value="Grande" data-price="35.99">Grande - R$ 35,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Frango com catupiry" data-image="imagens/frangocatupiry.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Frango com catupiry" data-image="imagens/frangocatupiry.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/atum.webp" class="d-block w-100" alt="Pizza de atum" loading="lazy">
+                                <h3>Atum</h3>
+                                <p>Molho especial, mussarela, atum ralado, cebola e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="25.99">Pequena - R$ 25,99</option>
+                                            <option value="Grande" data-price="37.99">Grande - R$ 37,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Atum" data-image="imagens/atum.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Atum" data-image="imagens/atum.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/baiana.webp" class="d-block w-100" alt="Pizza baiana" loading="lazy">
+                                <h3>Baiana</h3>
+                                <p>Molho especial, mussarela, calabresa moida, ovos, cebola, pimenta, azeitona e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="25.99">Pequena - R$ 25,99</option>
+                                            <option value="Grande" data-price="37.99">Grande - R$ 37,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Baiana" data-image="imagens/baiana.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Baiana" data-image="imagens/baiana.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/caipirona.webp" class="d-block w-100" alt="Pizza de Caipirona" loading="lazy">
+                                <h3>Caipirona</h3>
+                                <p>Molho especial, mussarela, frango, ovos, milho, ervilha, cebola e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="25.99">Pequena - R$ 25,99</option>
+                                            <option value="Grande" data-price="37.99">Grande - R$ 37,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Caipirona" data-image="imagens/caipirona.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Caipirona" data-image="imagens/caipirona.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/frangocheddar.webp" class="d-block w-100" alt="Pizza de frango com cheddar" loading="lazy">
+                                <h3>Frango com cheddar</h3>
+                                <p>Molho especial, mussarela, frango desfiado, cheddar e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="25.99">Pequena - R$ 25,99</option>
+                                            <option value="Grande" data-price="37.99">Grande - R$ 37,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Frangocomcheddar" data-image="imagens/frangocheddar.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Frangocomcheddar" data-image="imagens/frangocheddar.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/portuguesa.webp" class="d-block w-100" alt="Pizza portuguesa" loading="lazy">
                                 <h3>Portuguesa</h3>
                                 <p>Presunto, ovos, mussarela, cebola e ervilhas.</p>
                                 <div class="product-options mb-3 hidden">
@@ -95,32 +419,12 @@
                                     <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Calabresa" data-price="29,99" data-image="pizzacala.webp">Adicionar ao carrinho</button>
                                 </div>
                             </div>
-                            <div class="carousel-item">
-                                <img src="imagens/pizzafrangocatupiry.webp" class="d-block w-100" alt="Pizza frango com catupiry" loading="lazy">
-                                <h3>Frango com Catupiry</h3>
-                                <p>Frango desfiado, catupiry e cebola.</p>
-                                <p class="price">Valor: R$ 30,00</p>
-                                <div class="product-actions">
-                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Frango com Catupiry" data-price="30,00" data-image="pizzafrangocatupiry.webp">Comprar agora</a>
-                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Frango com Catupiry" data-price="30,00" data-image="pizzafrangocatupiry.webp">Adicionar ao carrinho</button>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <img src="imagens/pizzacalabresaespecial.webp" class="d-block w-100" alt="Pizza de calabresa especial" loading="lazy">
-                                <h3>Calabresa Especial</h3>
-                                <p>Molho especial, calabresa fatiada, cebola e queijo.</p>
-                                <p class="price">Valor: R$ 34,00</p>
-                                <div class="product-actions">
-                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Calabresa Especial" data-price="34,00" data-image="pizzacalabresaespecial.webp">Comprar agora</a>
-                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Calabresa Especial" data-price="34,00" data-image="pizzacalabresaespecial.webp">Adicionar ao carrinho</button>
-                                </div>
-                            </div>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#pizzaCarousel" data-bs-slide="prev">
+                            <button class="carousel-control-prev" type="button" data-bs-target="#pizzaTradicionalCarousel" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Anterior</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#pizzaCarousel" data-bs-slide="next">
+                        <button class="carousel-control-next" type="button" data-bs-target="#pizzaTradicionalCarousel" data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Próximo</span>
                         </button>
@@ -128,53 +432,364 @@
                 </article>
         </section>
         <div class="grid">
-            <article class="grid-carousel">
-            <div class="carousel slide" id="bebidasCarousel" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <h3>Bebidas</h3>
-                    <div class="carousel-item active">
-                                <img src="imagens/fanta.webp" class="d-block w-100" alt="Bebida" loading="lazy">
-                                <h3>Fanta Lata</h3>
-                                <p class="price">Valor: R$ 9,99</p>
+                <article class="grid-carousel">
+                    <div class="carousel slide" id="pizzaEspecialCarousel" data-bs-ride="carousel" data-bs-wrap="true">
+                        <div class="carousel-inner">
+                            <h3>Pizzas Especiais</h3>
+                            <div class="carousel-item active">
+                                <img src="imagens/calabresatresqueijos.webp" class="d-block w-100" alt="Pizza de calabresa tres queijos" loading="lazy">
+                                <h3>Calabresa Três Queijos</h3>
+                                <p>Molho especial, mussarela, calabresa, catupiry, cheddar e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="27.99">Pequena - R$ 27,99</option>
+                                            <option value="Grande" data-price="45.99">Grande - R$ 45,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
                                 <div class="product-actions">
-                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Fanta" data-price="9,99" data-image="imagens/fanta.webp">Comprar agora</a>
-                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Fanta" data-price="9,99" data-image="imagens/fanta.webp">Adicionar ao carrinho</button>
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="CalabresaTresQueijos" data-image="imagens/calabresattresqueijos.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="CalabresaTresQueijos" data-image="imagens/calabresattresqueijos.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                         <div class="carousel-item">
+                                <img src="imagens/atumextra.webp" class="d-block w-100" alt="Pizza de atum extra" loading="lazy">
+                                <h3>Atum Extra</h3>
+                                <p>Molho especial, mussarela, atum, ovos, bacon, pimentão cebola, azeitona e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="27.99">Pequena - R$ 27,99</option>
+                                            <option value="Grande" data-price="45.99">Grande - R$ 45,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="AtumExtra" data-image="imagens/atumextra.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="AtumExtra" data-image="imagens/atumextra.webp">Adicionar ao carrinho</button>
                                 </div>
                             </div>
                             <div class="carousel-item">
-                <img src="imagens/coca.webp" class="d-block w-100" alt="Bebida" loading="lazy">
-                <h3>Coca-Cola Lata</h3>
-                <p class="price">Valor: R$ 9,99</p>
-                <div class="product-actions">
-                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Coca" data-price="9,99" data-image="imagens/coca.webp">Comprar agora</a>
-                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Coca" data-price="9,99" data-image="imagens/coca.webp">Adicionar ao carrinho</button>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="imagens/guarana.webp" class="d-block w-100" alt="Bebida" loading="lazy">
-                    <h3>Guarana Lata</h3>
-                    <p class="price">Valor: 9,99</p>
-                    <div class="product-actions">
-                        <a href="endepagam.html" class="btn btn-primary select-order" data-product="Guarana" data-price="9,99" data-image="imagens/gurana.webp">Comprar agora</a>
-                        <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Guarana" data-price="9,99" data-image="imagens/guarana.webp">Adicionar ao carrinho</button>
-                    </div>
-                </div>
-            </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#bebidasCarousel" data-bs-slide="prev">
+                                <img src="imagens/lomboespecial.webp" class="d-block w-100" alt="Pizza de lombo especial" loading="lazy">
+                                <h3>Lombo Especial</h3>
+                                <p>Molho especial, mussarela, lombo canadense, frango, bacon, catupiry e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="30.99">Pequena - R$ 30,99</option>
+                                            <option value="Grande" data-price="45.99">Grande - R$ 45,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="LomboEspecial" data-image="imagens/lomboespecial.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="LomboEspecial" data-image="imagens/lomboespecial.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/modadacasaespecial.webp" class="d-block w-100" alt="Pizza de moda da casa especial" loading="lazy">
+                                <h3>Moda da Casa Especial</h3>
+                                <p>Molho especial, mussarela, calabresa, presunto, bacon, frango, cheddar e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="30.99">Pequena - R$ 30,99</option>
+                                            <option value="Grande" data-price="45.99">Grande - R$ 45,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="ModadaCasaEspecial" data-image="imagens/modadacasaespecial.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="ModadaCasaEspecial" data-image="imagens/modadacasaespecial.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/megaextra.webp" class="d-block w-100" alt="Pizza mega extra" loading="lazy">
+                                <h3>Mega Extra</h3>
+                                <p>Molho especial, mussarela, lombo, bacon, milho verde, cheiro verde, azeitona e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="30.99">Pequena - R$ 30,99</option>
+                                            <option value="Grande" data-price="45.99">Grande - R$ 45,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="MegaExtra" data-image="imagens/megaextra.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="MegaExtra" data-image="imagens/megaextra.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="imagens/mista.webp" class="d-block w-100" alt="Pizza de moda da casa especial" loading="lazy">
+                                <h3>Mista</h3>
+                                <p>Molho especial, mussarela, queijo coalho, calabresa, presunto, frango, ovos, milho, tomate, cebola, catupiry, cheddar e orégano.</p>
+                                <div class="product-options mb-3 hidden">
+                                    <div class="mb-2">
+                                        <label class="form-label">Tamanho:</label>
+                                        <select class="form-select pizza-size" aria-label="Tamanho da pizza">
+                                            <option value="" selected disabled>Selecione o tamanho</option>
+                                            <option value="Pequena" data-price="30.99">Pequena - R$ 30,99</option>
+                                            <option value="Grande" data-price="45.99">Grande - R$ 45,99</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Borda recheada:</label>
+                                        <select class="form-select pizza-crust" aria-label="Borda recheada">
+                                            <option value="" selected disabled>Selecione a borda</option>
+                                            <option value="Sem borda" data-extra="0">Sem borda</option>
+                                            <option value="Catupiry" data-extra="2.00">Catupiry + R$ 2,00</option>
+                                            <option value="Cheddar" data-extra="2.00">Cheddar + R$ 2,00</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Observação:</label>
+                                        <input type="text" class="form-control pizza-note" placeholder="Ex: sem cebola, adicionar milho">
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="endepagam.html" class="btn btn-primary select-order" data-product="Mista" data-image="imagens/mista.webp">Comprar agora</a>
+                                    <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Mista" data-image="imagens/mista.webp">Adicionar ao carrinho</button>
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#pizzaEspecialCarousel" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#bebidasCarousel" data-bs-slide="next">
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#pizzaEspecialCarousel" data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Próximo</span>
-                </button>
-                </div>
-            </article>
+                        </button>
+                    </div>
+                </article>
+        </section>
+        <div class="grid">
+          <article class="grid-carousel">
+  <h3>Bebidas</h3>
+
+  <!-- Seleção de tamanho do Guaraná -->
+  <div class="bebida-selector mb-3">
+    <label for="tamanhoGuarana" class="form-label">Escolha o tamanho do Guaraná:</label>
+    <select id="tamanhoGuarana" class="form-select">
+      <option value="" selected disabled>Selecione uma opção...</option>
+      <option value="lata">Refrigerante Lata (350ml)</option>
+      <option value="1litro">Refrigerante 1 Litro</option>
+      <option value="2litros">Refrigerante 2 Litros</option>
+    </select>
+  </div>
+
+  <!-- Carrossel (Oculto por padrão com d-none) -->
+  <div id="bebidasCarousel" class="carousel slide d-none" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+      <!-- Item: Lata -->
+      <div class="carousel-item" id="item-lata">
+        <img src="imagens/guarana.webp" class="d-block w-100" alt="Refrigerante Lata" loading="lazy">
+        <h3>Guaraná Lata</h3>
+        <p class="price">Valor: R$ 9,99</p>
+        <div class="product-actions">
+          <a href="endepagam.html" class="btn btn-primary select-order" data-product="Guaraná Lata" data-price="9,99">Comprar agora</a>
+          <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Guaraná Lata" data-price="9,99">Adicionar ao carrinho</button>
+        </div>
+      </div>
+
+      <div class="carousel-item" id="item-fanta">
+        <img src="imagens/fanta.webp" class="d-block w-100" alt="Fanta Lata" loading="lazy">
+        <h3>Fanta Lata</h3>
+        <p class="price">Valor: R$ 9,99</p>
+        <div class="product-actions">
+          <a href="endepagam.html" class="btn btn-primary select-order" data-product="Fanta Lata" data-price="9,99">Comprar agora</a>
+          <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Fanta Lata" data-price="9,99">Adicionar ao carrinho</button>
+        </div>
+      </div>
+
+      <div class="carousel-item" id="item-coca">
+        <img src="imagens/coca.webp" class="d-block w-100" alt="Coca Lata" loading="lazy">
+        <h3>Coca-cola Lata</h3>
+        <p class="price">Valor: R$ 9,99</p>
+        <div class="product-actions">
+          <a href="endepagam.html" class="btn btn-primary select-order" data-product="Coca Lata" data-price="9,99">Comprar agora</a>
+          <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Coca Lata" data-price="9,99">Adicionar ao carrinho</button>
+        </div>
+      </div>
+
+      <!-- Item: 1 Litro -->
+      <div class="carousel-item" id="item-1litro">
+        <img src="imagens/refrigerantes.webp" class="d-block w-100" alt="Coca-cola 1L" loading="lazy">
+        <h3>Coca-cola 1 Litro</h3>
+        <p class="price">Valor: R$ 12,99</p>
+        <div class="product-actions">
+          <a href="endepagam.html" class="btn btn-primary select-order" data-product="Coca-cola 1L" data-price="12,99">Comprar agora</a>
+          <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Coca-cola 1L" data-price="12,99">Adicionar ao carrinho</button>
+        </div>
+      </div>
+
+      <div class="carousel-item" id="item-1litro">
+        <img src="imagens/refrigerantes.webp" class="d-block w-100" alt="Guaraná Antarctica 1L" loading="lazy">
+        <h3>Guaraná Antarctica 1 Litro</h3>
+        <p class="price">Valor: R$ 12,99</p>
+        <div class="product-actions">
+          <a href="endepagam.html" class="btn btn-primary select-order" data-product="GuaranáAntarctica 1L" data-price="12,99">Comprar agora</a>
+          <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Guaraná Antarctica 1L" data-price="12,99">Adicionar ao carrinho</button>
+        </div>
+      </div>
+
+      <div class="carousel-item" id="item-1litro">
+        <img src="imagens/refrigerantes.webp" class="d-block w-100" alt="Fanta 1L" loading="lazy">
+        <h3>Fanta 1 Litro</h3>
+        <p class="price">Valor: R$ 12,99</p>
+        <div class="product-actions">
+          <a href="endepagam.html" class="btn btn-primary select-order" data-product="Fanta 1L" data-price="12,99">Comprar agora</a>
+          <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Fanta 1L" data-price="12,99">Adicionar ao carrinho</button>
+        </div>
+      </div>
+      <!-- Item: 2 Litros -->
+      <div class="carousel-item" id="item-2litros">
+        <img src="imagens/refrigerantes.webp" class="d-block w-100" alt="Coca-cola 2L" loading="lazy">
+        <h3>Coca-cola 2 Litros</h3>
+        <p class="price">Valor: R$ 15,99</p>
+        <div class="product-actions">
+          <a href="endepagam.html" class="btn btn-primary select-order" data-product="Coca-cola 2L" data-price="15,99">Comprar agora</a>
+          <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Coca-cola 2L" data-price="15,99">Adicionar ao carrinho</button>
+        </div>
+      </div>
+
+      <div class="carousel-item" id="item-2litros">
+        <img src="imagens/refrigerantes.webp" class="d-block w-100" alt="Guaraná Antarctica 2L" loading="lazy">
+        <h3>Guaraná Antarctica 2 Litros</h3>
+        <p class="price">Valor: R$ 15,99</p>
+        <div class="product-actions">
+          <a href="endepagam.html" class="btn btn-primary select-order" data-product="Guaraná Antarctica 2L" data-price="15,99">Comprar agora</a>
+          <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Guaraná Antarctica 2L" data-price="15,99">Adicionar ao carrinho</button>
+        </div>
+      </div>
+
+      <div class="carousel-item" id="item-2litros">
+        <img src="imagens/refrigerantes.webp" class="d-block w-100" alt="Fanta 2L" loading="lazy">
+        <h3>Fanta 2 Litros</h3>
+        <p class="price">Valor: R$ 15,99</p>
+        <div class="product-actions">
+          <a href="endepagam.html" class="btn btn-primary select-order" data-product="Fanta 2L" data-price="15,99">Comprar agora</a>
+          <button type="button" class="btn btn-outline-secondary add-to-cart" data-product="Fanta 2L" data-price="15,99">Adicionar ao carrinho</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Controles de navegação do Bootstrap -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#bebidasCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bebidasCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+</article>
         </div>
         <section class="contact">
             <p>Endereço: Centro, 67 - Jupi/PE</p>
         </section>
     </main>
+    <dialog id="drinkComplementDialog" class="drink-complement-dialog" aria-labelledby="drinkComplementTitle">
+        <form method="dialog" class="drink-complement-content">
+            <h2 id="drinkComplementTitle">Quer incluir uma bebida?</h2>
+            <p>Escolha uma opção para acompanhar seu pedido.</p>
+            <fieldset class="drink-complement-options">
+                <legend class="visually-hidden">Bebidas disponíveis</legend>
+                <label><input type="checkbox" name="complementDrink" value="Coca" data-price="9.99" data-image="imagens/coca.webp"> Coca-Cola Lata <span>R$ 9,99</span></label>
+                <label><input type="checkbox" name="complementDrink" value="Guarana" data-price="9.99" data-image="imagens/guarana.webp"> Guaraná Lata <span>R$ 9,99</span></label>
+                <label><input type="checkbox" name="complementDrink" value="Fanta" data-price="9.99" data-image="imagens/fanta.webp"> Fanta Lata <span>R$ 9,99</span></label>
+
+                <label><input type="checkbox" name="complementDrink" value="coca-cola" data-price="12.99" data-image="imagens/refrigerantes.webp"> Coca-Cola 1L <span>R$ 12,99</span></label>
+                <label><input type="checkbox" name="complementDrink" value="guarana-antarctica" data-price="12.99" data-image="imagens/refrigerantes.webp"> Guaraná Antarctica 1L <span>R$ 12,99</span></label>
+                <label><input type="checkbox" name="complementDrink" value="fanta 1l" data-price="12.99" data-image="imagens/refrigerantes.webp"> Fanta 1L <span>R$ 12,99</span></label>
+
+                 <label><input type="checkbox" name="complementDrink" value="coca-cola2" data-price="15.99" data-image="imagens/refrigerantes.webp"> Coca-Cola 2L <span>R$ 15,99</span></label>
+                <label><input type="checkbox" name="complementDrink" value="guarana-antarctica2" data-price="15.99" data-image="imagens/refrigerantes.webp"> Guaraná Antarctica 2L <span>R$ 15,99</span></label>
+                <label><input type="checkbox" name="complementDrink" value="fanta 2l" data-price="15.99" data-image="imagens/refrigerantes.webp"> Fanta 2L <span>R$ 15,99</span></label>
+            </fieldset>
+            <div class="drink-complement-actions">
+                <button type="button" class="btn btn-outline-secondary" id="skipDrinkComplement">Continuar sem bebida</button>
+                <button type="button" class="btn btn-primary" id="confirmDrinkComplement">Continuar</button>
+            </div>
+        </form>
+    </dialog>
     <footer>&copy; 2026 Dom Matos Pizzaria. Todos os direitos reservados.</footer>
     <script type="module" src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

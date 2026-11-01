@@ -1,5 +1,5 @@
 // Define o nome do cache e os arquivos que serão armazenados para o funcionamento offline.
-const CACHE_NAME = 'u4a2-cache-v2';
+const CACHE_NAME = 'Projeto-Pizzaria-cache-v2.1';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

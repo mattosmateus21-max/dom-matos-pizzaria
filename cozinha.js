@@ -30,7 +30,7 @@ function renderizarPedidos() {
         const pedido = ultimosDadosRecebidos[key];
         const status = pedido.status || "Recebido";
 
-        const isConcluido = (status === 'Saiu para entrega' || status === 'Pronto / Retirada');
+        const isConcluido = (status === 'Saiu para entrega' || status === 'Pronto / Retirada' || status === 'Pronto / Consumir no local' || status === 'Cancelado');
 
         // Aplica o filtro das abas
         if (filtroAtual === 'ativos' && isConcluido) return;
@@ -47,7 +47,9 @@ function renderizarPedidos() {
         if (status === "Em preparação") badgeClass = "bg-info text-dark";
         else if (status === "Pronto / Retirada") badgeClass = "bg-primary";
         else if (status === "Saiu para entrega") badgeClass = "bg-success";
-
+        else if (status === "Pronto / Consumir no local") badgeClass = "bg-success";
+        else if (status === "Cancelado") badgeClass = "bg-danger";
+        
         const cardHtml = `
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm h-100 border-0">
@@ -71,6 +73,8 @@ function renderizarPedidos() {
                         <button class="btn btn-sm btn-info w-100 fw-bold" onclick="mudarStatus('${key}', 'Em preparação')">👨‍🍳 Em Preparação</button>
                         <button class="btn btn-sm btn-primary w-100 fw-bold" onclick="mudarStatus('${key}', 'Pronto / Retirada')">📦 Pedido Pronto</button>
                         <button class="btn btn-sm btn-success w-100 fw-bold" onclick="mudarStatus('${key}', 'Saiu para entrega')">🛵 Saiu para Entrega</button>
+                        <button class="btn btn-sm btn-warning w-100 fw-bold" onclick="mudarStatus('${key}', 'Pronto / Consumir no local')">🍽️ Pronto / Consumir no local</button>
+                        <button class="btn btn-sm btn-danger w-100 fw-bold" onclick="mudarStatus('${key}', 'Cancelado')">❌ Cancelar Pedido</button>
                     </div>
                 </div>
             </div>

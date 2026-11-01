@@ -32,15 +32,15 @@ onValue(pedidoRef, (snapshot) => {
 
     // Atualiza a barra de progresso visual de acordo com o status atualizado pela cozinha
     if (status === "Recebido") {
-        barra.style.width = "25%";
+        barra.style.width = "50%";
         barra.className = "progress-bar progress-bar-striped progress-bar-animated bg-warning text-dark fw-bold";
         barra.innerText = "Recebido / Na Fila";
     } else if (status === "Em preparação") {
-        barra.style.width = "50%";
+        barra.style.width = "75%";
         barra.className = "progress-bar progress-bar-striped progress-bar-animated bg-info text-dark fw-bold";
         barra.innerText = "Em Preparação na Cozinha 🍕";
     } else if (status === "Pronto / Retirada") {
-        barra.style.width = "75%";
+        barra.style.width = "100%";
         barra.className = "progress-bar progress-bar-striped progress-bar-animated bg-primary fw-bold";
         barra.innerText = "Pedido Pronto 📦";
     } else if (status === "Saiu para entrega") {

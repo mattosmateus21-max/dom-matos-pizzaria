@@ -199,6 +199,12 @@ function resolveProductInfo(element, fallbackProduct) {
 function appendAddressInfo(lines, addressInfo) {
     if (!addressInfo) return;
 
+    if (addressInfo.mesa) {
+        lines.push('', '📍 Local:');
+        lines.push(`- Mesa: ${addressInfo.mesa}`);
+        return;
+    }
+
     lines.push('', '📍 Endereço:');
     lines.push(`- Rua: ${addressInfo.rua}`);
     lines.push(`- Número: ${addressInfo.numero}`);
@@ -294,6 +300,88 @@ function validateProductOptions(itemContainer) {
     return Boolean(sizeValue && crustValue);
 }
 
+let pendingPizzaOrder = null;
+
+function openDrinkComplement(pizza, action) {
+    const dialog = document.getElementById('drinkComplementDialog');
+    if (!dialog) {
+        completePizzaOrder(pizza, action, []);
+        return;
+    }
+
+    pendingPizzaOrder = { pizza, action };
+    dialog.querySelectorAll('input[name="complementDrink"]').forEach(function(input) {
+        input.checked = false;
+    });
+    dialog.showModal();
+}
+
+function completePizzaOrder(pizza, action, drinks) {
+    if (action === 'checkout' && drinks.length === 0) {
+        saveSelectedProduct(pizza.product, pizza.price, pizza.image, pizza.size, pizza.crust, pizza.note);
+        window.location.href = 'endepagam.html';
+        return;
+    }
+
+    const pizzaItem = {
+        nome: pizza.product,
+        preco: parseFloat(pizza.price || '0'),
+        quantidade: 1,
+        image: pizza.image,
+        size: pizza.size,
+        crust: pizza.crust,
+        note: pizza.note
+    };
+    addToCart(pizzaItem);
+    drinks.forEach(function(drink) {
+        addToCart({ nome: drink.nome, preco: drink.preco, quantidade: 1, image: drink.image });
+    });
+
+    if (action === 'checkout') {
+        clearSelectedProduct();
+        window.location.href = 'endepagam.html';
+        return;
+    }
+
+    updateCartSummary();
+    showToast(`${pizza.product} adicionado ao carrinho.`);
+}
+
+function initDrinkComplement() {
+    const dialog = document.getElementById('drinkComplementDialog');
+    const confirmButton = document.getElementById('confirmDrinkComplement');
+    const skipButton = document.getElementById('skipDrinkComplement');
+    if (!dialog || !confirmButton || !skipButton) return;
+
+    const finish = function(includeDrinks) {
+        if (!pendingPizzaOrder) return;
+        const drinks = includeDrinks
+            ? Array.from(dialog.querySelectorAll('input[name="complementDrink"]:checked')).map(function(input) {
+                return {
+                    nome: input.value,
+                    preco: parseFloat(input.dataset.price),
+                    image: input.dataset.image
+                };
+            })
+            : [];
+        const pendingOrder = pendingPizzaOrder;
+        pendingPizzaOrder = null;
+        dialog.close();
+        completePizzaOrder(pendingOrder.pizza, pendingOrder.action, drinks);
+    };
+
+    confirmButton.addEventListener('click', function() {
+        finish(true);
+    });
+    skipButton.addEventListener('click', function() {
+        finish(false);
+    });
+    dialog.addEventListener('cancel', function(event) {
+        event.preventDefault();
+        finish(false);
+    });
+}
+
 // Inicializa os links de seleção de produto para salvar o pedido na página de checkout.
 function initProductSelection() {
     document.querySelectorAll('.select-order').forEach(function(link) {
@@ -314,8 +402,13 @@ function initProductSelection() {
             }
 
             event.preventDefault();
-            const { product, price, image, size, crust, note } = resolveProductInfo(link, 'Pizza');
-            saveSelectedProduct(product, price, image, size, crust, note);
+            const productInfo = resolveProductInfo(link, 'Pizza');
+            if (itemContainer?.querySelector('.pizza-size')) {
+                openDrinkComplement(productInfo, 'checkout');
+                return;
+            }
+
+            saveSelectedProduct(productInfo.product, productInfo.price, productInfo.image, productInfo.size, productInfo.crust, productInfo.note);
             window.location.href = 'endepagam.html';
         });
     });
@@ -340,11 +433,16 @@ function initAddToCartButtons() {
                 return;
             }
 
-            const { product, price, image, size, crust, note } = resolveProductInfo(button, 'Produto');
-            const numericPrice = parseFloat(price || '0');
-            addToCart({ nome: product, preco: numericPrice, quantidade: 1, image, size, crust, note });
+            const productInfo = resolveProductInfo(button, 'Produto');
+            if (itemContainer?.querySelector('.pizza-size')) {
+                openDrinkComplement(productInfo, 'cart');
+                return;
+            }
+
+            const numericPrice = parseFloat(productInfo.price || '0');
+            addToCart({ nome: productInfo.product, preco: numericPrice, quantidade: 1, image: productInfo.image, size: productInfo.size, crust: productInfo.crust, note: productInfo.note });
             updateCartSummary();
-            showToast(`${product} adicionado ao carrinho.`);
+            showToast(`${productInfo.product} adicionado ao carrinho.`);
         });
     });
 }
@@ -436,6 +534,58 @@ function updatePaymentSelection() {
     });
 }
 
+// Controla a exibição do formulário conforme a opção de entrega escolhida.
+function initDeliverySelection() {
+    const deliveryOptions = document.querySelectorAll('input[name="deliveryOption"]');
+    const formCard = document.getElementById('checkoutFormCard');
+    const formTitle = document.getElementById('formTitle');
+    const addressFields = document.getElementById('addressFields');
+    const ruaInput = document.getElementById('rua');
+    const numeroInput = document.getElementById('numero');
+    const bairroInput = document.getElementById('bairro');
+    const mesaInput = document.getElementById('mesa');
+
+    if (!deliveryOptions.length || !formCard) return;
+
+    const toggleForm = () => {
+        const selectedOption = document.querySelector('input[name="deliveryOption"]:checked')?.value || 'delivery';
+        const isDelivery = selectedOption === 'delivery';
+        const isConsumir = selectedOption === 'consumir';
+
+        formCard.classList.remove('hidden');
+        if (formTitle) {
+            formTitle.textContent = isDelivery ? 'Dados para Delivery' : selectedOption === 'retirada' ? 'Dados para Retirada' : 'Dados para Consumir no local';
+        }
+
+        if (addressFields) {
+            addressFields.classList.toggle('hidden', !isDelivery);
+        }
+
+        if (mesaInput) {
+            const mesaField = mesaInput.closest('.field-row');
+            if (mesaField) {
+                mesaField.classList.toggle('hidden', !isConsumir);
+            }
+            mesaInput.required = isConsumir;
+        }
+
+        [ruaInput, numeroInput, bairroInput].forEach(function(input) {
+            if (!input) return;
+            const parentField = input.closest('.field-row');
+            if (parentField) {
+                parentField.classList.toggle('hidden', !isDelivery);
+            }
+            input.required = isDelivery;
+        });
+    };
+
+    deliveryOptions.forEach(function(input) {
+        input.addEventListener('change', toggleForm);
+    });
+
+    toggleForm();
+}
+
 // Inicializa a página de checkout, exibindo o resumo do pedido ou o carrinho conforme o estado.
 function initCheckoutPage() {
     const selectedProduct = getSelectedProduct();
@@ -513,18 +663,23 @@ function initCheckoutPage() {
             const rua = document.getElementById('rua').value.trim();
             const numero = document.getElementById('numero').value.trim();
             const bairro = document.getElementById('bairro').value.trim();
+            const mesa = document.getElementById('mesa').value.trim();
             const pagamento = document.querySelector('input[name="pagamentos"]:checked')?.value || 'Não informado';
+            const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked')?.value || 'delivery';
             const cart = getCart();
             const customerName = [nome, sobrenome].filter(Boolean).join(' ');
+            const isDelivery = deliveryOption === 'delivery';
+            const isConsumir = deliveryOption === 'consumir';
+            const addressText = isDelivery ? `${rua || '...'}, ${numero || '...'}, ${bairro || '...'}` : isConsumir ? `Mesa: ${mesa || '...'}` : 'Retirada no estabelecimento';
             let previewText;
 
             if (cart.length > 0) {
                 const itemsText = cart.map(item => `- ${item.nome} x${item.quantidade} — R$ ${formatPrice(item.preco * item.quantidade)}`).join('\n');
-                previewText = `Cliente: ${customerName || 'cliente'}!\nItens:\n${itemsText}\nTotal: R$ ${formatPrice(getCartTotal(cart))}\nEndereço: ${rua || '...'}, ${numero || '...'}, ${bairro || '...'}\nPagamento: ${pagamento}`;
+                previewText = `Cliente: ${customerName || 'cliente'}!\nForma de entrega: ${isDelivery ? 'Delivery' : 'Retirada'}\nItens:\n${itemsText}\nTotal: R$ ${formatPrice(getCartTotal(cart))}\nEndereço: ${addressText}\nPagamento: ${pagamento}`;
             } else {
                 const product = selectedProduct?.product || 'Nenhum produto selecionado';
                 const price = selectedProduct?.price || '';
-                previewText = `Cliente: ${customerName || 'cliente'}!\nProduto: ${product}${price ? `\nValor: R$ ${price}` : ''}\nEndereço: ${rua || '...'}, ${numero || '...'}, ${bairro || '...'}\nPagamento: ${pagamento}`;
+                previewText = `Cliente: ${customerName || 'cliente'}!\nForma de entrega: ${isDelivery ? 'Delivery' : 'Retirada'}\nProduto: ${product}${price ? `\nValor: R$ ${price}` : ''}\nEndereço: ${addressText}\nPagamento: ${pagamento}`;
             }
 
             updateOrderPreview(previewText);
@@ -535,13 +690,28 @@ function initCheckoutPage() {
 
             const nome = document.getElementById('nome').value.trim();
             const sobrenome = document.getElementById('sobrenome').value.trim();
+            const contato = document.getElementById('contato').value.trim();
             const rua = document.getElementById('rua').value.trim();
             const numero = document.getElementById('numero').value.trim();
             const bairro = document.getElementById('bairro').value.trim();
+            const mesa = document.getElementById('mesa').value.trim();
             const pagamento = document.querySelector('input[name="pagamentos"]:checked')?.value || 'Não informado';
+            const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked')?.value || 'delivery';
+            const isDelivery = deliveryOption === 'delivery';
+            const isConsumir = deliveryOption === 'consumir';
 
-            if (!nome || !sobrenome || !rua || !numero || !bairro) {
-                showToast('Preencha nome, sobrenome, rua, número e bairro para concluir o pedido.');
+            if (!nome || !sobrenome || !contato) {
+                showToast('Preencha nome, sobrenome e contato para concluir o pedido.');
+                return;
+            }
+
+            if (isDelivery && (!rua || !numero || !bairro)) {
+                showToast('Preencha rua, número e bairro para delivery.');
+                return;
+            }
+
+            if (isConsumir && !mesa) {
+                showToast('Preencha o número da mesa para consumir no local.');
                 return;
             }
 
@@ -570,7 +740,9 @@ function initCheckoutPage() {
             const dadosNovoPedido = {
                 id: pedidoId,
                 cliente: customerName,
-                endereco: `Rua: ${rua}, Nº ${numero}, Bairro: ${bairro}`,
+                entrega: isDelivery ? 'Delivery' : isConsumir ? 'Consumir no local' : 'Retirada',
+                endereco: isDelivery ? `Rua: ${rua}, Nº ${numero}, Bairro: ${bairro}` : isConsumir ? `Mesa: ${mesa}` : 'Retirada no estabelecimento',
+                mesa: isConsumir ? mesa : null,
                 pagamento: pagamento,
                 itens: itensPedido,
                 total: valorTotal,
@@ -584,14 +756,15 @@ function initCheckoutPage() {
 
                 // 2. Monta a mensagem para o WhatsApp incluindo o ID do pedido e o link de rastreio
                 let message;
+                const addressInfo = isDelivery ? { rua, numero, bairro } : isConsumir ? { mesa } : null;
                 if (cart.length > 0) {
-                    message = buildWhatsAppMessageFromCart(cart, { rua, numero, bairro }, pagamento, customerName);
+                    message = buildWhatsAppMessageFromCart(cart, addressInfo, pagamento, customerName);
                 } else {
                     const product = getSelectedProduct();
                     const productName = product?.product || 'Pizza';
                     const price = product?.price || '';
                     const image = product?.image || '';
-                    message = buildWhatsAppMessage(productName, price, { rua, numero, bairro }, pagamento, image, customerName);
+                    message = buildWhatsAppMessage(productName, price, addressInfo, pagamento, image, customerName);
                 }
 
                 // Adiciona o aviso do ID e do rastreio no texto do WhatsApp
@@ -644,13 +817,25 @@ function initCheckoutPage() {
 
 // Inicializa todos os componentes da página quando o DOM estiver pronto.
 document.addEventListener('DOMContentLoaded', function() {
+    initDrinkComplement();
+    initGuaranaCarousel();
     initProductSelection();
     initAddToCartButtons();
     initCartButton();
     updateCartSummary();
     initWhatsAppButtons();
+    initDeliverySelection();
     initCheckoutPage();
 });
+
+function initGuaranaCarousel() {
+    const sizeSelect = document.getElementById('tamanhoGuarana');
+    if (!sizeSelect) return;
+
+    sizeSelect.addEventListener('change', function() {
+        mostrarCarrosselGuarana(sizeSelect.value);
+    });
+}
 
 // Função auxiliar antiga para controlar a exibição do banner do carrinho.
 function atualizarInterfaceCarrinho(totalItens) {
@@ -661,4 +846,22 @@ function atualizarInterfaceCarrinho(totalItens) {
     } else {
         cartBanner.style.display = 'block';
     }
+}
+function mostrarCarrosselGuarana(opcao) {
+    const carouselElement = document.getElementById('bebidasCarousel');
+    if (!carouselElement) return;
+
+    carouselElement.classList.remove('d-none');
+
+    const items = carouselElement.querySelectorAll('.carousel-item');
+    items.forEach(item => item.classList.remove('active'));
+
+    const itemSelecionado = document.getElementById(`item-${opcao}`);
+    const itemIndex = Array.from(items).indexOf(itemSelecionado);
+    if (itemIndex < 0) return;
+
+    itemSelecionado.classList.add('active');
+    const bsCarousel = bootstrap.Carousel.getOrCreateInstance(carouselElement);
+    bsCarousel.to(itemIndex);
+
 }
